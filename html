@@ -1,0 +1,44 @@
+<script>
+  document.getElementById('linkInput').addEventListener('input', function() {
+    var inputValue = this.value.trim(); // Remove leading/trailing spaces
+    var dynamicLink = document.getElementById('dynamicLink');
+
+    // Check if the input starts with "http://" or "https://"
+    if (!inputValue.startsWith('http://') && !inputValue.startsWith('https://')) {
+      inputValue = 'https://' + inputValue; // If not, prepend "https://"
+    }
+
+    dynamicLink.href = inputValue;
+  });
+
+  document.getElementById('dynamicLink').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the default behavior (opening in the same tab)
+    window.location.href = this.href; // Navigate to the specified link
+  });
+
+  document.getElementById('backgroundInput').addEventListener('input', function() {
+    var backgroundValue = this.value.trim(); // Remove leading/trailing spaces
+    document.body.style.backgroundImage = backgroundValue ? 'url(' + backgroundValue + ')' : 'none';
+  });
+
+  // Add event listener to go fullscreen when '^' is typed
+  document.addEventListener('keydown', function(event) {
+    if (event.key === '^') {
+      toggleFullScreen();
+    } else if (event.key === '*') {
+      // Open the HTML in a new tab when '*' is typed
+      window.open('data:text/html;charset=utf-8,' + encodeURIComponent(document.documentElement.outerHTML), '_blank');
+    }
+  });
+
+  // Function to toggle fullscreen mode
+  function toggleFullScreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  }
+</script>
